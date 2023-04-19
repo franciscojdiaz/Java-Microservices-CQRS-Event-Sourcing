@@ -1,0 +1,22 @@
+server:
+  port: 5000
+
+# mongodb trabajara como elemnt store
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: bankingAccount
+      username: "vaxidrez"
+      password: "VaxiDrez2005$"
+      authentication-database: admin
+  # aca configuramos el middleware para producir y consumir los mensajes
+  kafka:
+    producer:
+      # este es el puerto que se creo en el docker container
+      bootstrap-servers: localhost:9092
+      # aqui arma el mensaje que enivara kafka, pero un mensaje esta compuesto de dos partes, un valor de indice
+      # que es un valor unico y el cuerpo del mensaje o payload, lo cual es lo siguiente:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

@@ -1,0 +1,30 @@
+server:
+  port: 5001
+
+spring:
+   jpa:
+     database-platform: org.hibernate.dialect.MySQL8Dialect
+     show-sql: true
+     hibernate:
+       # esta propieda siempre actualizara el modelo de la base de datos, contra el esquema existente java entities
+       ddl-auto: update
+   datasource:
+     url: jdbc:mysql://localhost:3306/bankingAccount?createDatabaseIfNotExist=true
+     username: "root"
+     password: "VaxiDrez2005$"
+   kafka:
+     # en este caso kafka tiene el comportamiento de escuchador
+     listener:
+       ack-mode: manual_immediate
+     consumer:
+       bootstrap-servers: localhost:9092
+       group-id: bankaccConsumer
+       auto-offset-reset: earliest
+       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+       properties:
+         spring:
+           json:
+             trusted:
+               # esto significa que todos los sujetos son confiables de ser serializado
+               packages: '*'
